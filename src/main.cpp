@@ -4,10 +4,15 @@
 #include <BLEServer.h>
 
 BLECharacteristic *pCharacteristic;
+BLECharacteristic *pPinCharacteristic;
+
+const int PIN_7 = 7;
 
 void setup()
 {
   Serial.begin(115200);
+  pinMode(PIN_7, OUTPUT);
+  digitalWrite(PIN_7, LOW);
 
   BLEDevice::init("ESP32-WebBLE");
   BLEServer *pServer = BLEDevice::createServer();
@@ -20,6 +25,13 @@ void setup()
           BLECharacteristic::PROPERTY_WRITE);
 
   pCharacteristic->setValue("Hello from ESP32!");
+
+  pPinCharacteristic = pService->createCharacteristic(
+      "12345678-abcd-efab-cdef-1234567890ab",
+      BLECharacteristic::PROPERTY_READ |
+          BLECharacteristic::PROPERTY_WRITE);
+
+  pPinCharacteristic->setValue("0");
   pService->start();
 
   BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
@@ -31,5 +43,18 @@ void setup()
 
 void loop()
 {
-  // nothing needed
+  // Check for pin control commands
+  std::string pinValue = pPinCharacteristic->getValue();
+  if (pinValue.length() > 0)
+  {
+    if (pinValue[0] == '1')
+    {
+      digitalWrite(PIN_7, HIGH);
+    }
+    else if (pinValue[0] == '0')
+    {
+      digitalWrite(PIN_7, LOW);
+    }
+  }
+  delay(100);
 }
