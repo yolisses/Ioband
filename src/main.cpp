@@ -10,8 +10,9 @@ void setup()
 
 void loop()
 {
-  for (auto i = 0; i < 10; i++)
-  {
-    display->displayDigit(i);
-  }
+  display->displayEncoding({1, 0, 0, 0, 0}, 1000);
+  display->displayEncoding({0, 1, 0, 0, 0}, 1000);
+  display->displayEncoding({0, 0, 1, 0, 0}, 1000);
+  display->displayEncoding({0, 0, 0, 1, 0}, 1000);
+  display->displayEncoding({0, 0, 0, 0, 1}, 1000);
 }
