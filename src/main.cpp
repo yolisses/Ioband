@@ -4,6 +4,7 @@ Display *display;
 
 void setup()
 {
+  Serial.begin(115200);
   display = new Display();
 }
 

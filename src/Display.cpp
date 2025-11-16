@@ -64,6 +64,17 @@ class Display
         }
     }
 
+    std::string getEncodingString(Encoding encoding)
+    {
+        std::string result = "";
+        for (auto i = 0; i < ENCODING_SIZE; i++)
+        {
+            auto value = encoding[i];
+            result += std::to_string(value);
+        }
+        return result;
+    }
+
 public:
     Display()
     {
@@ -73,6 +84,11 @@ public:
     void displayDigit(int digit)
     {
         auto encoding = getDigitEncoding(digit);
+        Serial.print("Displaying digit ");
+        Serial.print(digit);
+        Serial.print(" with encoding ");
+        Serial.print(getEncodingString(*encoding).c_str());
+        Serial.println();
         displayEncoding(*encoding, digitDuration);
     }
 };
