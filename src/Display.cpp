@@ -8,7 +8,13 @@ typedef std::array<bool, ENCODING_SIZE> Encoding;
 class Display
 {
     int digitDuration = 500;
-    int outputPins[ENCODING_SIZE] = { 1, 2,7, 6, 5,};
+    int outputPins[ENCODING_SIZE] = {
+        1,
+        2,
+        7,
+        6,
+        5,
+    };
     Encoding errorEncoding = {1, 1, 1, 1, 1};
     Encoding digitEncodings[10] = {
         {1, 0, 0, 0, 0},
