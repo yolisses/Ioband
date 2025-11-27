@@ -13,7 +13,6 @@ class BluetoothHandler
 
     void setup()
     {
-        Serial.begin(115200);
         pinMode(PIN_7, OUTPUT);
         digitalWrite(PIN_7, LOW);
 
@@ -40,8 +39,6 @@ class BluetoothHandler
         BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
         pAdvertising->addServiceUUID("12345678-1234-1234-1234-1234567890ab");
         BLEDevice::startAdvertising();
-
-        Serial.println("BLE started, waiting for connection...");
     }
 
     void loop()

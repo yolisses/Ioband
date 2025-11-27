@@ -72,9 +72,6 @@ public:
     void displayDigit(int digit)
     {
         auto encoding = getDigitEncoding(digit);
-        Serial.print("Displaying digit ");
-        Serial.print(digit);
-        Serial.println();
         displayEncoding(*encoding, digitDuration);
     }
 
@@ -88,10 +85,6 @@ public:
 
     void displayEncoding(Encoding encoding, int duration)
     {
-        Serial.print("Displaying encoding ");
-        Serial.print(getEncodingString(encoding).c_str());
-        Serial.println();
-
         for (auto i = 0; i < ENCODING_SIZE; i++)
         {
             auto outputPin = outputPins[i];
@@ -104,29 +97,24 @@ public:
 
     void displayTime(int hours, int minutes)
     {
-        Serial.print("Displaying time: ");
-        Serial.print(hours);
-        Serial.print(":");
-        if (minutes < 10) Serial.print("0");
-        Serial.println(minutes);
-
         // Display hours
         int hourTens = hours / 10;
         int hourOnes = hours % 10;
-        
-        if (hourTens > 0) {
+
+        if (hourTens > 0)
+        {
             displayDigit(hourTens);
             delay(pauseBetweenDigits);
         }
         displayDigit(hourOnes);
-        
+
         // Pause between hours and minutes
         delay(pauseBetweenUnits);
-        
+
         // Display minutes
         int minuteTens = minutes / 10;
         int minuteOnes = minutes % 10;
-        
+
         displayDigit(minuteTens);
         delay(pauseBetweenDigits);
         displayDigit(minuteOnes);
