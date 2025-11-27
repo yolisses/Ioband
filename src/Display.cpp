@@ -8,6 +8,8 @@ typedef std::array<bool, ENCODING_SIZE> Encoding;
 class Display
 {
     int digitDuration = 500;
+    int pauseBetweenDigits = 300;
+    int pauseBetweenUnits = 800;
     int outputPins[ENCODING_SIZE] = {
         1,
         2,
@@ -98,5 +100,35 @@ public:
         }
         delay(duration);
         clearOutput();
+    }
+
+    void displayTime(int hours, int minutes)
+    {
+        Serial.print("Displaying time: ");
+        Serial.print(hours);
+        Serial.print(":");
+        if (minutes < 10) Serial.print("0");
+        Serial.println(minutes);
+
+        // Display hours
+        int hourTens = hours / 10;
+        int hourOnes = hours % 10;
+        
+        if (hourTens > 0) {
+            displayDigit(hourTens);
+            delay(pauseBetweenDigits);
+        }
+        displayDigit(hourOnes);
+        
+        // Pause between hours and minutes
+        delay(pauseBetweenUnits);
+        
+        // Display minutes
+        int minuteTens = minutes / 10;
+        int minuteOnes = minutes % 10;
+        
+        displayDigit(minuteTens);
+        delay(pauseBetweenDigits);
+        displayDigit(minuteOnes);
     }
 };
